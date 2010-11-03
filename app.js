@@ -1,4 +1,8 @@
 var express = require('express');
+require('less');
+require('jade');
+require('socket.io');
+
 var app = module.exports = express.createServer();
 
 // Configuration
