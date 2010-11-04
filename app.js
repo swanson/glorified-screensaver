@@ -1,7 +1,7 @@
 var express = require('express');
+var io = require('socket.io');
 require('less');
 require('jade');
-require('socket.io');
 
 var app = module.exports = express.createServer();
 
