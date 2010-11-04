@@ -33,8 +33,8 @@ app.get('/', function(req, res){
 
 // Socket.IO
 var io = require('socket.io');
-io.listen(app);
-io.on('connection', function(){
+var socket = io.listen(app);
+socket.on('connection', function(){
   console.log('connection made');
 });
 
