@@ -31,14 +31,14 @@ app.get('/', function(req, res){
   });
 });
 
-// Socket.IO
-var io = require('socket.io');
-var socket = io.listen(app);
-socket.on('connection', function(){
-  console.log('connection made');
-});
-
 if (!module.parent) {
   app.listen(3000);
   console.log("Express server listening on port %d", app.address().port)
 }
+
+// Socket.IO
+var io = require('socket.io');
+var socket = io.listen(app, {});
+socket.on('connection', function(client){
+  client.send("Hi!");
+});

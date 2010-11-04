@@ -5,4 +5,12 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js')
     script(src='http://cdn.socket.io/stable/socket.io.js')
+    :javascript
+      | window.onload = function() {
+      |   var s = new io.Socket(null, {port: 3000});
+      |   s.connect();
+      |   s.on('message', function(data) {
+      |     $("#announcements").append("<div>" + data + "</div>");
+      |   });
+      | };
   body!= body
