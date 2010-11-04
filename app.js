@@ -1,5 +1,4 @@
 var express = require('express');
-var io = require('socket.io');
 require('less');
 require('jade');
 
@@ -30,6 +29,13 @@ app.get('/', function(req, res){
         title: 'Express'
     }
   });
+});
+
+// Socket.IO
+var io = require('socket.io');
+io.listen(app);
+io.on('connection', function(){
+  console.log('connection made');
 });
 
 if (!module.parent) {
