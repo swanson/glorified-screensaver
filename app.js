@@ -26,7 +26,16 @@ app.configure('production', function(){
 app.get('/', function(req, res){
   res.render('index.jade', {
     locals: {
-        title: 'Glorified screensaver'
+      title: 'Glorified screensaver'
+    }
+  });
+});
+
+app.get('/edit', function(req, res){
+  res.render('edit.jade', {
+    locals: {
+      title: 'Edit Announcments',
+      items: ['a', 'b', 'c']
     }
   });
 });
@@ -42,3 +51,6 @@ var socket = io.listen(app, {});
 socket.on('connection', function(client){
   client.send("Hi!");
 });
+
+var mongoose = require('mongoose').Mongoose;
+var db = mongoose.connect('mongodb://localhost/db');

@@ -1,0 +1,16 @@
+script(src='javascripts/edit.js')
+h1= title
+ul#announcement-list
+  - items.forEach(function(item){
+    li
+      textarea.item(disabled=true)= item
+      button.edit edit
+      button.delete delete
+  - })
+  li
+    textarea#new-item.item(placeholder='Add new announcement...')
+    button.add(onclick="addAnnouncement()") add
+
+
+  
+  
