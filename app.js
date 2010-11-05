@@ -40,6 +40,12 @@ app.get('/edit', function(req, res){
   });
 });
 
+app.post('/posts/add', function(req, res){
+  var item = req.body['item'];
+  console.log('adding ' + item);
+  res.send(item, 200);
+});
+
 if (!module.parent) {
   app.listen(3000);
   console.log("Express server listening on port %d", app.address().port)

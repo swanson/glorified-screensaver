@@ -3,8 +3,14 @@ function addAnnouncement() {
   if (text) {
     $.post('/posts/add', { item: text }, 
       function(data) {
-        $('#announcement-list').append('<li>' + data + '</li>');
-      }
+        $('#announcement-list').prepend(
+            '<li><textarea disabled="disabled" class="item">' +
+            data +
+            '</textarea>' + 
+            '<button class="edit">edit</button>' +
+            '<button class="delete">delete</button></li>'
+        );
+        $('#new-item').val('');
+      });
   }
-
 }
