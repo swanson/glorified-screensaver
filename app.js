@@ -43,6 +43,7 @@ app.get('/edit', function(req, res){
 app.post('/posts/add', function(req, res){
   var item = req.body['item'];
   console.log('adding ' + item);
+  socket.broadcast(item);
   res.send(item, 200);
 });
 
@@ -56,6 +57,10 @@ var io = require('socket.io');
 var socket = io.listen(app, {});
 socket.on('connection', function(client){
   client.send("Hi!");
+});
+
+socket.on('close', function(client){
+  clients.remove(client);
 });
 
 var mongoose = require('mongoose').Mongoose;
