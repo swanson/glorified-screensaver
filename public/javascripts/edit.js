@@ -30,4 +30,27 @@ window.onload = function() {
     }
   }));
 
+  $('.edit').live('click', (function() {
+    $(this).parent().find('.item').attr('disabled', false);
+    $(this).removeClass().addClass('save');
+    $(this).attr('innerText', 'save');
+  }));
+
+  $('.save').live('click', (function() {
+    var button = $(this);
+    var announcement = $(this).parent().find('.item');
+    var announcement_id = announcement.attr('id');
+    var new_text = announcement.val();
+    if (announcement_id) {
+      $.post('/posts/save', { id: announcement_id, item: new_text },
+        function(id) {
+          announcement.attr('disabled', true);
+          button.removeClass().addClass('edit');
+          button.attr('innerText', 'edit');
+        }
+      );
+    }
+  }));
+
+
 };

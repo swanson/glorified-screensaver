@@ -16,6 +16,11 @@ window.onload = function() {
         announcement.remove();
       });
     }
+    else if (data['type'] == 'edit') {
+      var announcement = $('#' + data['id']);
+      announcement.html(data['payload']);
+    }
+
   });
 };
 

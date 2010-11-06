@@ -69,13 +69,28 @@ app.post('/posts/delete', function(req, res){
   console.log('removing ' + id);
   Announcement.find({_id: id}).first(function(result){
     result.is_active = 0;
-    result.save()
+    result.save();
     res.send(id, 200);
   });
 
   msg = {'type': 'delete', 'id': id};
   socket.broadcast(msg);
 });
+
+app.post('/posts/save', function(req, res){
+  var id = req.body['id'];
+  var item = req.body['item'];
+  console.log('removing ' + id);
+  Announcement.find({_id: id}).first(function(result){
+    result.body = item;
+    result.save();
+    res.send(id, 200);
+  });
+
+  msg = {'type': 'edit', 'id': id, 'payload': item};
+  socket.broadcast(msg);
+});
+
 
 
 if (!module.parent) {
