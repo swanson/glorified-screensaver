@@ -72,8 +72,11 @@ if (!module.parent) {
 var io = require('socket.io');
 var socket = io.listen(app, {});
 socket.on('connection', function(client){
-  client.send("Hi!");
-  //todo send current announcements
+  Announcement.fetch_active().all(function(results) {
+    for (i in results) {
+      client.send({'payload': results[i].body, 'type':'add'});
+    }
+  });
 });
 
 socket.on('close', function(client){
