@@ -35,7 +35,9 @@ app.get('/edit', function(req, res){
   var stored_items = [];
   Announcement.fetch_active().all(function(results) {
     for (i in results) {
-      stored_items.push(results[i].body);
+      var id = results[i]._id.toHexString();
+      var msg = results[i].body;
+      stored_items.push({'payload': msg, 'id': id});
     }
 
     res.render('edit.jade', {
@@ -57,10 +59,10 @@ app.post('/posts/add', function(req, res){
   a.save();
   console.log(a);
 
-  msg = {'payload': item, 'type': 'add'};
+  msg = {'payload': item, 'type': 'add', 'id': a._id.toHexString()};
   socket.broadcast(msg);
   
-  res.send(item, 200);
+  res.send(msg, 200);
 });
 
 if (!module.parent) {
@@ -74,7 +76,9 @@ var socket = io.listen(app, {});
 socket.on('connection', function(client){
   Announcement.fetch_active().all(function(results) {
     for (i in results) {
-      client.send({'payload': results[i].body, 'type':'add'});
+      var id = results[i]._id.toHexString();
+      var msg = results[i].body;
+      client.send({'payload': msg, 'type':'add', 'id': id});
     }
   });
 });
