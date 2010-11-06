@@ -57,13 +57,26 @@ app.post('/posts/add', function(req, res){
   a.body = item;
   a.is_active = 1;
   a.save();
-  console.log(a);
 
   msg = {'payload': item, 'type': 'add', 'id': a._id.toHexString()};
   socket.broadcast(msg);
   
   res.send(msg, 200);
 });
+
+app.post('/posts/delete', function(req, res){
+  var id = req.body['id'];
+  console.log('removing ' + id);
+  Announcement.find({_id: id}).first(function(result){
+    result.is_active = 0;
+    result.save()
+    res.send(id, 200);
+  });
+
+  msg = {'type': 'delete', 'id': id};
+  socket.broadcast(msg);
+});
+
 
 if (!module.parent) {
   app.listen(3000);
@@ -99,6 +112,7 @@ mongoose.model('Announcement', {
   },
   static: {
     fetch_active: function() {
+      //todo order by timestamp
       return this.find({is_active: 1});
     }
   }

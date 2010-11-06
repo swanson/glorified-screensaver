@@ -6,7 +6,15 @@ window.onload = function() {
   s.connect();
   s.on('message', function(data) {
     if (data['type'] == 'add') {    
-      $("#announcements").append("<div>" + data['payload'] + "</div>");
+      $("#announcements").append(
+          '<div id=' + data['id'] +'>' + data['payload'] + '</div>'
+      );
+    }
+    else if (data['type'] == 'delete') {
+      var announcement = $('#' + data['id']);
+      announcement.slideUp(300, function () {
+        announcement.remove();
+      });
     }
   });
 };
