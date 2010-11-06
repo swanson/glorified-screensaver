@@ -32,18 +32,34 @@ app.get('/', function(req, res){
 });
 
 app.get('/edit', function(req, res){
-  res.render('edit.jade', {
-    locals: {
-      title: 'Edit Announcments',
-      items: ['a', 'b', 'c']
+  var stored_items = [];
+  Announcement.fetch_active().all(function(results) {
+    for (i in results) {
+      stored_items.push(results[i].body);
     }
+
+    res.render('edit.jade', {
+      locals: {
+        title: 'Edit Announcments',
+        items: stored_items
+      }
+    });
   });
 });
 
 app.post('/posts/add', function(req, res){
   var item = req.body['item'];
   console.log('adding ' + item);
-  socket.broadcast(item);
+
+  var a = new Announcement();
+  a.body = item;
+  a.is_active = 1;
+  a.save();
+  console.log(a);
+
+  msg = {'payload': item, 'type': 'add'};
+  socket.broadcast(msg);
+  
   res.send(item, 200);
 });
 
@@ -57,6 +73,7 @@ var io = require('socket.io');
 var socket = io.listen(app, {});
 socket.on('connection', function(client){
   client.send("Hi!");
+  //todo send current announcements
 });
 
 socket.on('close', function(client){
@@ -65,3 +82,18 @@ socket.on('close', function(client){
 
 var mongoose = require('mongoose').Mongoose;
 var db = mongoose.connect('mongodb://localhost/db');
+mongoose.model('Announcement', {
+  properties: ['body', 'timestamp', 'is_active'],
+  methods: {
+    save: function(fn) {
+      this.timestamp = new Date();
+      this.__super__(fn);
+    }
+  },
+  static: {
+    fetch_active: function() {
+      return this.find({is_active: 1});
+    }
+  }
+});
+var Announcement = db.model('Announcement');
