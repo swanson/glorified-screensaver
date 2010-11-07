@@ -83,6 +83,7 @@ app.post('/posts/save', function(req, res){
   console.log('removing ' + id);
   Announcement.find({_id: id}).first(function(result){
     result.body = item;
+    result.timestamp = new Date();
     result.save();
     res.send(id, 200);
   });
@@ -127,8 +128,7 @@ mongoose.model('Announcement', {
   },
   static: {
     fetch_active: function() {
-      //todo order by timestamp
-      return this.find({is_active: 1});
+      return this.find({is_active: 1}).sort({timestamp: -1});
     }
   }
 });
