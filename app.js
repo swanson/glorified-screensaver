@@ -112,10 +112,6 @@ socket.on('connection', function(client){
   });
 });
 
-socket.on('close', function(client){
-  clients.remove(client);
-});
-
 var mongoose = require('mongoose').Mongoose;
 var db = mongoose.connect('mongodb://localhost/db');
 mongoose.model('Announcement', {
@@ -128,7 +124,7 @@ mongoose.model('Announcement', {
   },
   static: {
     fetch_active: function() {
-      return this.find({is_active: 1}).sort({timestamp: -1});
+      return this.find({is_active: 1});
     }
   }
 });
