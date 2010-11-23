@@ -42,7 +42,7 @@ app.get('/edit', function(req, res){
 
     res.render('edit.jade', {
       locals: {
-        title: 'Edit Announcments',
+        title: 'Edit Announcements',
         items: stored_items
       }
     });

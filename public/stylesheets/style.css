@@ -20,9 +20,19 @@ h2 {
   font-size: 18px;
 }
 
+textarea {
+  height: 100px;
+  width: 600px;
+  font-size: 24px;
+}
+
 #logo {
   padding-top: 100px;
   padding-bottom: 100px;
+}
+
+#announcement-list li {
+  list-style: none;
 }
 
 #announcements li {
