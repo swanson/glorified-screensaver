@@ -29,15 +29,15 @@ window.onload = function() {
   var scene;
   var renderer;
 
-  var mouseX = 0;
-  var mouseY = 0;
+  var mouseX = 50;
+  var mouseY = 50;
  
   var iW = 1000;
-  var iParticles = 600;
+  var iParticles = 1000;
   var aParticles = [];
   var fFieldScale = 0.0009;
-  var fParticleSpeed = 15;
-  PerlinSimplex.noiseDetail(1);
+  var fParticleSpeed = 40;
+  PerlinSimplex.noiseDetail(1.5);
 
   var point = function point() {
       var fSpd,fSpd2;
@@ -48,7 +48,7 @@ window.onload = function() {
       var fSx,fSy,fSz;
       var iColor = 0xFFFFFF*Math.random();
       var oParticle = new THREE.Particle(new THREE.ColorFillMaterial(iColor, 0.4));
-      oParticle.size = 20;
+      oParticle.size = 15 + 20*Math.random();
       var t;
 	
       var reset = function reset() {
