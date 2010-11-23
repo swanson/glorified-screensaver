@@ -45,9 +45,16 @@ h2 {
 }
 
 #box {
-  background-color: rgba(150,105,234,0.2);
+  background-color: #379247;
   border-radius: 15px;
   padding-top: 5px;
   -webkit-box-shadow: 0 0 50px rgba(0,0,0,0.8);
+}
+
+#gfx {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
 }
 
