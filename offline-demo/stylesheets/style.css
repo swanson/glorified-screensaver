@@ -1,3 +1,8 @@
+html { 
+  overflow-y: hidden;
+  overflow-x: hidden;
+ }
+ 
 body {
   font: 14px "Trebuchet MS",Helvetica,sans-serif;
 }
@@ -12,7 +17,7 @@ body div {
 }
 
 h1 {
-  font-size: 35px;
+  font-size: 65px;
   width: 100%;
 }
 
@@ -67,4 +72,3 @@ textarea {
   top: 0;
   z-index: -1;
 }
-

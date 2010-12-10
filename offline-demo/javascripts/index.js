@@ -1,25 +1,4 @@
 window.onload = function() {
-  var s = new io.Socket(null, {port: 3000});
-
-  s.connect();
-  s.on('message', function(data) {
-    if (data['type'] == 'add') {    
-      $("#announcements").append(
-          '<li id=' + data['id'] +'>' + data['payload'] + '</li>'
-      );
-    }
-    else if (data['type'] == 'delete') {
-      var announcement = $('#' + data['id']);
-      announcement.slideUp(300, function () {
-        announcement.remove();
-      });
-    }
-    else if (data['type'] == 'edit') {
-      var announcement = $('#' + data['id']);
-      announcement.html(data['payload']);
-    }
-
-  });
 
   //background rendering -- based heavily on http://test.sjeiti.com/jsflowfield4d/
   //stripped out some code and adapted to use jQuery
@@ -125,7 +104,7 @@ window.onload = function() {
       
       scene = new THREE.Scene();
       renderer = new THREE.CanvasRenderer();
-      renderer.setSize(screen.width, screen.height);
+      renderer.setSize(screen.width+100, screen.height+100);
       
       for (var i = 0; i < iParticles; i++) {
           var oPoint = point();
